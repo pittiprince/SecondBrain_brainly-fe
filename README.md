@@ -1,51 +1,24 @@
-# React + TypeScript + Vite
+# Brainly – Second Brain frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite + Tailwind client for the Brainly API (save links, tweets, YouTube links and PDFs; search them).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Run
+```bash
+npm install
+cp .env.example .env   # set VITE_API_URL to your backend
+npm run dev
+npm run build          # type-check + production build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+| Variable | Purpose |
+|---|---|
+| `VITE_API_URL` | Backend base URL, e.g. `https://brainly-wzoi.onrender.com` (no trailing slash) |
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## How it talks to the backend
+- Sign in / sign up store a JWT in `localStorage`; `src/apiClient.ts` sends it as `Authorization: Bearer ...` and redirects to sign-in on a 401.
+- Memories are created, updated and searched through the API (`src/atoms/MemoryData.ts`); PDFs are uploaded first and their URL saved as the link.
+- The title needs 3+ characters, the description 10+ and the link must be a valid URL (the API's rules are shown as errors in the form).
+- Google sign-in is disabled in the UI until the Auth0 redirect flow is connected back to the SPA.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# SecondBrain_brainly-fe
+## Deploy (Vercel)
+Import the repo, framework "Vite", add `VITE_API_URL`. `vercel.json` rewrites all paths to `index.html` so deep links like `/main` work. Then set the backend's `CORS_ORIGIN` to the Vercel URL.

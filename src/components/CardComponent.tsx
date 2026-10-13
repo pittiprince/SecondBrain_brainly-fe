@@ -11,6 +11,7 @@ interface CardComponentProps extends MemoryDataInterface {
 }
 
 export const CardComponent: React.FC<CardComponentProps> = ({
+  id,
   type,
   title,
   link,
@@ -20,7 +21,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   onUpdate,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
-  const [editedCard, setEditedCard] = useState<MemoryDataInterface>({ type, title, link, description, tags, file })
+  const [editedCard, setEditedCard] = useState<MemoryDataInterface>({ id, type, title, link, description, tags, file })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.type === "file") {

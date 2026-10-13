@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Network, Eye, EyeOff, Mail, Lock } from 'lucide-react';
-import axios from 'axios';
+import { apiClient, errorMessage } from '@/apiClient';
+import { setToken } from '@/lib/auth';
+import { AlertMessage } from './Alert';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -8,24 +10,22 @@ export function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(email)
-    console.log(password)
-    console.log(localStorage.getItem("token"))
-    try{
-      await axios.post('https://brainly-wzoi.onrender.com/api/signin',{
-        email:email,
-        password:password,
-        JWT:localStorage.getItem("token")
-      }).then((res)=>{
-        navigate('/main')
-        console.log(res)
-      })
-    }catch(err){
-      console.log(err)
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await apiClient.post('/api/signin', { email, password });
+      setToken(res.data.token);
+      navigate('/main');
+    } catch (err) {
+      setError(errorMessage(err, 'Sign in failed'));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,11 +106,14 @@ export function SignInPage() {
                 </div>
               ))}
 
+              {error && <AlertMessage message={error} />}
+
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-gray-600 text-white"
               >
-                Sign In
+                {loading ? 'Signing in...' : 'Sign In'}
               </button>
 
               <div className="relative flex items-center py-4 text-gray-400">
@@ -121,9 +124,11 @@ export function SignInPage() {
 
               <button
                 type="button"
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-gray-700 hover:bg-gray-600 text-white"
+                disabled
+                title="Google sign-in is not available yet"
+                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border font-medium bg-gray-700 text-white opacity-50 cursor-not-allowed"
               >
-                <span>Google</span>
+                <span>Google (coming soon)</span>
               </button>
             </form>
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Network, Eye, EyeOff } from 'lucide-react';
-import axios from 'axios';
+import { apiClient, errorMessage } from '@/apiClient';
+import { setToken } from '@/lib/auth';
 import { AlertMessage } from './Alert';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,23 +21,11 @@ export function SignupPage() {
     setError(null);
 
     try {
-      const response = await axios.post('https://brainly-wzoi.onrender.com/api/signup', {
-        email: email,
-        password: password,
-        name: name,
-      }).then((res)=>{
-        localStorage.setItem("jwtKey",res.data?.jwtKey)
-        console.log(res.data?.jwtKey)
-        navigate('/main')
-
-      })
+      const res = await apiClient.post('/api/signup', { email, password, name });
+      setToken(res.data.token ?? res.data.jwtKey);
+      navigate('/main');
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.error('Axios error:', err.response?.data || err.message);
-        setError(err.response?.data.message || 'Something went wrong');
-      } else {
-        console.error('Unexpected error:', err);
-      }
+      setError(errorMessage(err));
     }
   };
 
