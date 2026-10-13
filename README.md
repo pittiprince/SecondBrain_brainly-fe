@@ -18,7 +18,7 @@ npm run build          # type-check + production build
 - Sign in / sign up store a JWT in `localStorage`; `src/apiClient.ts` sends it as `Authorization: Bearer ...` and redirects to sign-in on a 401.
 - Memories are created, updated and searched through the API (`src/atoms/MemoryData.ts`); PDFs are uploaded first and their URL saved as the link.
 - The title needs 3+ characters, the description 10+ and the link must be a valid URL (the API's rules are shown as errors in the form).
-- Google sign-in is disabled in the UI until the Auth0 redirect flow is connected back to the SPA.
+- Google sign-in goes through the API (Auth0) and returns to `/google-auth` with the token in the URL fragment.
 
 ## Deploy (Vercel)
 Import the repo, framework "Vite", add `VITE_API_URL`. `vercel.json` rewrites all paths to `index.html` so deep links like `/main` work. Then set the backend's `CORS_ORIGIN` to the Vercel URL.

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Network, Eye, EyeOff, Mail, Lock } from 'lucide-react';
-import { apiClient, errorMessage } from '@/apiClient';
+import { apiClient, errorMessage, API_URL } from '@/apiClient';
 import { setToken } from '@/lib/auth';
 import { AlertMessage } from './Alert';
 import { useNavigate } from 'react-router-dom';
@@ -124,11 +124,10 @@ export function SignInPage() {
 
               <button
                 type="button"
-                disabled
-                title="Google sign-in is not available yet"
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border font-medium bg-gray-700 text-white opacity-50 cursor-not-allowed"
+                onClick={() => { window.location.href = `${API_URL}/api/google-signin`; }}
+                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-gray-700 hover:bg-gray-600 text-white"
               >
-                <span>Google (coming soon)</span>
+                <span>Continue with Google</span>
               </button>
             </form>
 
