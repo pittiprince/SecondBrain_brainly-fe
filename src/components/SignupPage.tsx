@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NodeField } from './NodeField';
 import { Network, Eye, EyeOff } from 'lucide-react';
 import { apiClient, errorMessage } from '@/apiClient';
 import { setToken } from '@/lib/auth';
@@ -30,7 +31,8 @@ export function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen relative bg-background text-foreground">
+    <div className="min-h-screen relative overflow-hidden bg-background text-foreground dot-grid">
+      <NodeField />
       <nav className="fixed w-full z-40 backdrop-blur-sm bg-background border-b border-input">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
@@ -96,7 +98,7 @@ export function SignupPage() {
               ))}
               <button
                 type="submit"
-                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-muted text-foreground"
+                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-primary text-primary-foreground active:scale-[0.99]"
               >
                 Create Account
               </button>

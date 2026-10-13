@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NodeField } from './NodeField';
 import { Network, Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { apiClient, errorMessage, API_URL } from '@/apiClient';
 import { setToken } from '@/lib/auth';
@@ -30,7 +31,8 @@ export function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen overflow-hidden bg-background dot-grid">
+      <NodeField />
       <nav className="fixed w-full z-40 backdrop-blur-sm bg-background border-b border-input">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
@@ -111,7 +113,7 @@ export function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-primary text-primary-foreground"
+                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-primary text-primary-foreground active:scale-[0.99]"
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
@@ -125,7 +127,7 @@ export function SignInPage() {
               <button
                 type="button"
                 onClick={() => { window.location.href = `${API_URL}/api/google-signin`; }}
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-muted hover:bg-primary text-primary-foreground"
+                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-background hover:bg-accent text-foreground"
               >
                 <span>Continue with Google</span>
               </button>

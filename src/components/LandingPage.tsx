@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Network, Search, FileText, Share2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { NodeField } from './NodeField';
 
 interface FeatureCardProps {
   icon: ReactNode;
@@ -27,7 +28,7 @@ export function LandingPage() {
     <div className="min-h-screen relative bg-background text-foreground">
       {/* Navigation */}
       <nav className="fixed w-full z-50 backdrop-blur-sm bg-background border-b border-border">
-        <div className="container mx-auto px-4 py-3">
+        <div className="mx-auto max-w-6xl px-4 sm:px-8 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="relative">
@@ -59,11 +60,12 @@ export function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center fade-up">
+      <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28 dot-grid">
+        <NodeField />
+        <div className="mx-auto max-w-6xl px-4 sm:px-8">
+          <div className="relative max-w-3xl mx-auto text-center fade-up">
             <h1 className="text-4xl sm:text-6xl font-semibold mb-6">
-              Your Digital <span className="text-foreground">Second Brain</span>
+              Your Digital <span className="italic font-serif">Second Brain</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed">
               Store, organize, and manage all your important information in one place.
@@ -93,7 +95,7 @@ export function LandingPage() {
 
       {/* Features */}
       <section className="py-20 relative">
-        <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard
               icon={<Search className="w-6 h-6" />}
@@ -116,7 +118,7 @@ export function LandingPage() {
 
       {/* CTA Section */}
       <section className="py-20 relative border-t border-border">
-        <div className="container mx-auto px-4 text-center">
+        <div className="mx-auto max-w-6xl px-4 sm:px-8 text-center">
           <h2 className="text-3xl font-semibold mb-4">
             Ready to enhance your digital memory?
           </h2>

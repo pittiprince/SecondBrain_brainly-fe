@@ -69,7 +69,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {tags.split(",").map((tag, index) => (
-                <span key={index} className="px-2 py-1 text-xs bg-background text-muted-foreground rounded-full">
+                <span key={index} className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-full">
                   {tag.trim()}
                 </span>
               ))}
@@ -179,7 +179,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
               <h3 className="text-sm font-medium text-muted-foreground">Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {tags.split(",").map((tag, index) => (
-                  <span key={index} className="px-2 py-1 text-xs bg-background text-muted-foreground rounded-full">
+                  <span key={index} className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-full">
                     {tag.trim()}
                   </span>
                 ))}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Network, Plus, X } from 'lucide-react'
+import { NodeField } from "./NodeField"
 import { CardComponent } from "./CardComponent"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -138,7 +139,8 @@ export const MainPage = () => {
         </Button>
       </header>
 
-      <section className="flex flex-col items-center gap-4 px-4 pb-6 pt-12 text-center">
+      <section className="relative flex flex-col items-center gap-4 overflow-hidden px-4 pb-6 pt-12 text-center dot-grid">
+        <NodeField />
         <span className="rounded-full border border-border px-3 py-0.5 text-xs font-medium">Your second brain</span>
         <h1 className="max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">Save anything. Find it by meaning.</h1>
         <p className="max-w-xl text-muted-foreground">Links, videos, tweets and PDFs in one searchable place.</p>
@@ -281,7 +283,7 @@ export const MainPage = () => {
                   className="w-full bg-background text-foreground border-input"
                 />
               </div>
-              <Button onClick={handleSave} disabled={saving} className="w-full text-foreground">
+              <Button onClick={handleSave} disabled={saving} className="w-full">
                 {saving ? "Saving..." : "Save Memory"}
               </Button>
             </div>
