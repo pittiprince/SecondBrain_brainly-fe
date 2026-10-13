@@ -30,8 +30,8 @@ export function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 via-black to-gray-800">
-      <nav className="fixed w-full z-40 backdrop-blur-sm bg-black border-b border-input">
+    <div className="min-h-screen bg-background">
+      <nav className="fixed w-full z-40 backdrop-blur-sm bg-background border-b border-input">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -54,7 +54,7 @@ export function SignInPage() {
 
       <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-gray-800 border-input">
+          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-card border-input">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center text-foreground">
               Welcome Back
             </h2>
@@ -80,7 +80,7 @@ export function SignInPage() {
                         field === 'email' ? setEmail(e.target.value) : setPassword(e.target.value)
                       }
                       required
-                      className="w-full pl-10 pr-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-700 border-input text-foreground"
+                      className="w-full pl-10 pr-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-ring bg-muted border-input text-foreground"
                     />
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                       {field === 'email' ? (
@@ -93,7 +93,7 @@ export function SignInPage() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-600 text-muted-foreground"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-accent text-muted-foreground"
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
@@ -111,7 +111,7 @@ export function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-gray-600 text-foreground"
+                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-primary text-primary-foreground"
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
@@ -125,7 +125,7 @@ export function SignInPage() {
               <button
                 type="button"
                 onClick={() => { window.location.href = `${API_URL}/api/google-signin`; }}
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-gray-700 hover:bg-gray-600 text-foreground"
+                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-muted hover:bg-primary text-primary-foreground"
               >
                 <span>Continue with Google</span>
               </button>

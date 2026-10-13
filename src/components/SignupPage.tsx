@@ -30,8 +30,8 @@ export function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen relative bg-black text-foreground">
-      <nav className="fixed w-full z-40 backdrop-blur-sm bg-black border-b border-input">
+    <div className="min-h-screen relative bg-background text-foreground">
+      <nav className="fixed w-full z-40 backdrop-blur-sm bg-background border-b border-input">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -49,7 +49,7 @@ export function SignupPage() {
 
       <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-black border-input">
+          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-background border-input">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center">
               Join Brainly
             </h2>
@@ -77,13 +77,13 @@ export function SignupPage() {
                         : setPassword(e.target.value)
                     }
                     required
-                    className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-white bg-black border-input text-foreground"
+                    className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-ring bg-background border-input text-foreground"
                   />
                   {field === 'password' && (
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-[34px] sm:top-[38px] p-1 rounded-md hover:bg-gray-700 text-muted-foreground"
+                      className="absolute right-2 top-[34px] sm:top-[38px] p-1 rounded-md hover:bg-muted text-muted-foreground"
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -96,7 +96,7 @@ export function SignupPage() {
               ))}
               <button
                 type="submit"
-                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-gray-700 text-foreground"
+                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-muted text-foreground"
               >
                 Create Account
               </button>

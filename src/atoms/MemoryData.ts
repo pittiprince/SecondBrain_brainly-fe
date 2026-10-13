@@ -8,6 +8,7 @@ export interface MemoryDataInterface {
   link: string
   description: string
   tags: string
+  image?: string
   file?: File | undefined
 }
 
@@ -20,7 +21,7 @@ export const MemoryDataAtom = atom<MemoryDataInterface[]>({
 const TYPE_TO_API: Record<string, string> = { "Link": "link", "YouTube Link": "YoutubeLink", "Tweet": "tweet", "PDF": "pdf" }
 const TYPE_FROM_API: Record<string, string> = { link: "Link", YoutubeLink: "YouTube Link", tweet: "Tweet", pdf: "PDF" }
 
-interface ApiMemory { MemoryObjectId: string; type: string; link: string; title: string; desc: string; tags: string[] }
+interface ApiMemory { MemoryObjectId: string; type: string; link: string; title: string; desc: string; tags: string[]; image?: string }
 
 const fromApi = (m: ApiMemory): MemoryDataInterface => ({
   id: m.MemoryObjectId,
@@ -29,6 +30,7 @@ const fromApi = (m: ApiMemory): MemoryDataInterface => ({
   link: m.link,
   description: m.desc,
   tags: (m.tags ?? []).join(", "),
+  image: m.image,
 })
 
 const parseTags = (tags: string) => tags.split(",").map((t) => t.trim()).filter(Boolean)
@@ -61,17 +63,22 @@ export const createMemory = async (memory: MemoryDataInterface): Promise<MemoryD
   const link = await resolveLink(memory)
   const res = await apiClient.post("/api/memory-post", toApi(memory, link))
   const id: string = res.data.MemoryObjectId
+  const created = await apiClient.get<ApiMemory[]>("/api/memory-get").then((r) => r.data.find((x) => x.MemoryObjectId === id)).catch(() => undefined)
   // index it for search; a failure here (no embedding key configured, ...) must not fail the save
   apiClient.post("/api/generate-embeddings", { MemoryObjectId: id }).catch(() => undefined)
-  return { ...memory, id, link, file: undefined }
+  return { ...memory, id, link, image: created?.image, file: undefined }
 }
 
 export const updateMemory = async (memory: MemoryDataInterface): Promise<MemoryDataInterface> => {
   if (!memory.id) throw new Error("This memory has not been saved yet")
   const link = await resolveLink(memory)
-  await apiClient.post("/api/memory-update", { MemoryObjectId: memory.id, ...toApi(memory, link) })
+  const res = await apiClient.post("/api/memory-update", { MemoryObjectId: memory.id, ...toApi(memory, link) })
   apiClient.post("/api/generate-embeddings", { MemoryObjectId: memory.id }).catch(() => undefined)
-  return { ...memory, link, file: undefined }
+  return { ...memory, link, image: res.data?.memory?.image ?? memory.image, file: undefined }
+}
+
+export const deleteMemory = async (id: string): Promise<void> => {
+  await apiClient.post("/api/memory-delete", { MemoryObjectId: id })
 }
 
 export const searchMemories = async (keyword: string): Promise<MemoryDataInterface[]> => {

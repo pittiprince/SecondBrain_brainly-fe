@@ -16,5 +16,5 @@ export function GoogleAuthPage() {
       navigate('/sign-in-page', { replace: true });
     }
   }, [navigate]);
-  return <div className="min-h-screen bg-black text-white flex items-center justify-center">Signing you in...</div>;
+  return <div className="min-h-screen bg-background text-foreground flex items-center justify-center">Signing you in...</div>;
 }

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useRecoilState } from "recoil"
-import { MemoryDataAtom, fetchMemoryData, createMemory, updateMemory, searchMemories, MemoryDataInterface } from "@/atoms/MemoryData"
+import { MemoryDataAtom, fetchMemoryData, createMemory, updateMemory, searchMemories, deleteMemory, MemoryDataInterface } from "@/atoms/MemoryData"
 import { errorMessage } from "@/apiClient"
 import { clearToken, getToken } from "@/lib/auth"
 import { useNavigate } from "react-router-dom"
@@ -27,6 +27,7 @@ export const MainPage = () => {
   const [typeFilter, setTypeFilter] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const load = async (keyword?: string) => {
     try {
@@ -34,6 +35,8 @@ export const MainPage = () => {
       setCards(keyword ? await searchMemories(keyword) : await fetchMemoryData())
     } catch (err) {
       setError(errorMessage(err, "Could not load your memories"))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -101,6 +104,17 @@ export const MainPage = () => {
     }
   }
 
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return
+    try {
+      setError(null)
+      await deleteMemory(id)
+      setCards(cards.filter((c) => c.id !== id))
+    } catch (err) {
+      setError(errorMessage(err, "Could not delete the memory"))
+    }
+  }
+
   const visibleCards = typeFilter ? cards.filter((c) => c.type === typeFilter) : cards
 
   return (
@@ -155,10 +169,24 @@ export const MainPage = () => {
       <main className="mx-auto max-w-6xl px-4 pb-12 sm:px-8">
         {error && <p role="alert" className="mb-4 rounded-md bg-destructive/10 border border-destructive px-3 py-2 text-sm text-destructive">{error}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {loading && Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="overflow-hidden rounded-xl border" aria-hidden="true">
+              <div className="h-44 animate-pulse bg-muted" />
+              <div className="space-y-2 p-6">
+                <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
+                <div className="h-3 w-full animate-pulse rounded bg-muted" />
+              </div>
+            </div>
+          ))}
           {visibleCards.map((card) => (
-            <CardComponent key={card.id} {...card} onUpdate={(updatedCard) => handleUpdate(card.id, updatedCard)} />
+            <CardComponent key={card.id} {...card} onUpdate={(updatedCard) => handleUpdate(card.id, updatedCard)} onDelete={() => handleDelete(card.id)} />
           ))}
         </div>
+        {!loading && visibleCards.length === 0 && !error && (
+          <p className="py-16 text-center text-muted-foreground">
+            {query || typeFilter ? "No memories match your search." : "Nothing saved yet. Add your first memory with New memory."}
+          </p>
+        )}
       </main>
 
       {isFormOpen && (

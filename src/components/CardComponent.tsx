@@ -4,10 +4,26 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { FileText, Link2, MessageSquare, Play, Trash2 } from "lucide-react"
 import type { MemoryDataInterface } from "@/atoms/MemoryData"
 
 interface CardComponentProps extends MemoryDataInterface {
   onUpdate: (updatedCard: MemoryDataInterface) => void
+  onDelete: () => void
+}
+
+const TYPE_ICON: Record<string, typeof Link2> = { "YouTube Link": Play, Tweet: MessageSquare, PDF: FileText, Link: Link2 }
+
+const Thumb = ({ image, type, title }: { image?: string; type: string; title: string }) => {
+  const [failed, setFailed] = useState(false)
+  const Icon = TYPE_ICON[type] ?? Link2
+  return image && !failed ? (
+    <img src={image} alt={title} loading="lazy" onError={() => setFailed(true)} className="h-44 w-full object-cover" />
+  ) : (
+    <div className="flex h-44 w-full items-center justify-center bg-muted text-muted-foreground" aria-hidden="true">
+      <Icon className="h-8 w-8" />
+    </div>
+  )
 }
 
 export const CardComponent: React.FC<CardComponentProps> = ({
@@ -18,7 +34,9 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   description,
   tags,
   file,
+  image,
   onUpdate,
+  onDelete,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [editedCard, setEditedCard] = useState<MemoryDataInterface>({ id, type, title, link, description, tags, file })
@@ -42,7 +60,8 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="bg-card text-foreground hover:bg-accent transition-all duration-300 ease-in-out cursor-pointer border border-input">
+        <Card className="overflow-hidden text-left cursor-pointer transition-shadow hover:shadow-md">
+          <Thumb image={image} type={type} title={title} />
           <CardHeader>
             <CardTitle className="text-lg font-semibold">{title}</CardTitle>
             <CardDescription className="text-sm text-muted-foreground line-clamp-2">{description}</CardDescription>
@@ -166,7 +185,14 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                 ))}
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => { if (window.confirm("Delete this memory?")) onDelete() }}
+                className="text-destructive"
+              >
+                <Trash2 className="mr-2 h-4 w-4" /> Delete
+              </Button>
               <Button onClick={() => setIsEditing(true)}>
                 Edit
               </Button>

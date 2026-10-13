@@ -10,12 +10,12 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <div className="p-6 rounded-lg border border-gray-700 hover:border-white transition-colors float-animation">
-      <div className="w-12 h-12 rounded-lg bg-gray-700 flex items-center justify-center mb-4">
-        <div className="text-white">{icon}</div>
+    <div className="p-6 rounded-lg border border-border hover:border-foreground transition-colors float-animation">
+      <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center mb-4">
+        <div className="text-foreground">{icon}</div>
       </div>
-      <h3 className="text-lg font-semibold mb-2 text-white">{title}</h3>
-      <p className="text-gray-400">{description}</p>
+      <h3 className="text-lg font-semibold mb-2 text-foreground">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
     </div>
   );
 }
@@ -24,15 +24,15 @@ export function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative bg-black text-white">
+    <div className="min-h-screen relative bg-background text-foreground">
       {/* Navigation */}
-      <nav className="fixed w-full z-50 backdrop-blur-sm bg-black border-b border-gray-700">
+      <nav className="fixed w-full z-50 backdrop-blur-sm bg-background border-b border-border">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="relative">
-                <Network className="w-8 h-8 text-white transform rotate-45" />
-                <Network className="w-8 h-8 text-gray-600 absolute top-0 left-0 transform rotate-90" />
+                <Network className="w-8 h-8 text-foreground transform rotate-45" />
+                <Network className="w-8 h-8 text-muted-foreground absolute top-0 left-0 transform rotate-90" />
               </div>
               <span className="text-xl font-semibold">Brainly</span>
             </div>
@@ -41,7 +41,7 @@ export function LandingPage() {
                 onClick={() => {
                   navigate('/sign-in-page');
                 }}
-                className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 Sign in
               </button>
@@ -49,7 +49,7 @@ export function LandingPage() {
                 onClick={() => {
                   navigate('/signup-page');
                 }}
-                className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
               >
                 Sign up
               </button>
@@ -63,9 +63,9 @@ export function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center fade-up">
             <h1 className="text-4xl sm:text-6xl font-semibold mb-6">
-              Your Digital <span className="text-gray-200">Second Brain</span>
+              Your Digital <span className="text-foreground">Second Brain</span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed">
               Store, organize, and manage all your important information in one place.
               Never lose track of valuable content again.
             </p>
@@ -74,7 +74,7 @@ export function LandingPage() {
                 onClick={() => {
                   navigate('/signup-page');
                 }}
-                className="w-full sm:w-auto px-8 py-4 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
               >
                 Sign up for free
               </button>
@@ -82,7 +82,7 @@ export function LandingPage() {
                 onClick={() => {
                   navigate('/sign-in-page');
                 }}
-                className="w-full sm:w-auto px-8 py-4 text-gray-400 hover:text-white border border-gray-700 rounded-lg transition-colors"
+                className="w-full sm:w-auto px-8 py-4 text-muted-foreground hover:text-foreground border border-border rounded-lg transition-colors"
               >
                 Sign in →
               </button>
@@ -115,15 +115,15 @@ export function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 relative border-t border-gray-700">
+      <section className="py-20 relative border-t border-border">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-semibold mb-4">
             Ready to enhance your digital memory?
           </h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Join thousands of users who have transformed their information management.
           </p>
-          <button className="px-8 py-4 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors">
+          <button className="px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors">
             Sign up now
           </button>
         </div>
