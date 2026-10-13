@@ -104,61 +104,57 @@ export const MainPage = () => {
   const visibleCards = typeFilter ? cards.filter((c) => c.type === typeFilter) : cards
 
   return (
-    <div className="min-h-screen bg-[#191919] text-white p-4 sm:p-6 md:p-8">
-      <header className="mb-8">
-        <div className="container mx-auto">
-          <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => (window.location.href = "/")}
-                className="flex items-center space-x-2 focus:outline-none hover:opacity-80 transition-opacity"
-              >
-                <div className="relative">
-                  <Network className="w-6 h-6 sm:w-8 sm:h-8 text-white transform rotate-45" />
-                  <Network className="w-6 h-6 sm:w-8 sm:h-8 text-gray-500 absolute top-0 left-0 transform rotate-90" />
-                </div>
-                <span className="text-lg sm:text-xl font-semibold text-white">Brainly</span>
-              </button>
-            </div>
-            <form onSubmit={handleSearch} className="w-full sm:w-auto">
-              <Input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search Your memory (press Enter)"
-                className="w-full sm:w-[30rem] md:w-[40rem] h-10 px-4 py-2 bg-[#2a2a2a] text-white border-2 border-gray-700 rounded-full focus:outline-none focus:border-gray-500 transition-all placeholder-gray-400"
-              />
-            </form>
-            <nav className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-5">
-              {["Link", "YouTube Link", "Tweet", "PDF"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => setTypeFilter(typeFilter === item ? null : item)}
-                  className={`text-sm transition-colors ${typeFilter === item ? "text-white underline" : "text-gray-300 hover:text-white"}`}
-                >
-                  {item}
-                </button>
-              ))}
-              <button onClick={signOut} className="text-sm text-gray-500 hover:text-white transition-colors">
-                Sign out
-              </button>
-            </nav>
-          </div>
-        </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="flex flex-wrap items-center gap-3 border-b border-border px-4 py-3 sm:px-8">
+        <button
+          onClick={() => (window.location.href = "/")}
+          className="flex items-center gap-2 font-bold tracking-tight focus:outline-none hover:opacity-80 transition-opacity"
+        >
+          <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary text-primary-foreground">
+            <Network className="h-4 w-4" />
+          </span>
+          Brainly
+        </button>
+        <div className="flex-1" />
+        <Button onClick={() => setIsFormOpen(true)} size="sm">
+          <Plus className="mr-2 h-4 w-4" /> New memory
+        </Button>
+        <Button onClick={signOut} variant="outline" size="sm">
+          Sign out
+        </Button>
       </header>
 
-      <main className="container mx-auto">
-        {error && <p role="alert" className="mb-4 rounded bg-red-900/40 border border-red-700 px-3 py-2 text-sm text-red-200">{error}</p>}
-        <div className="mb-6 flex justify-end">
-          <Button
-            onClick={() => setIsFormOpen(true)}
-            className="bg-[#2a2a2a] text-white hover:bg-[#333333] transition-colors"
-          >
-            <Plus className="mr-2 h-4 w-4" /> Create New Memory
-          </Button>
-        </div>
+      <section className="flex flex-col items-center gap-4 px-4 pb-6 pt-12 text-center">
+        <span className="rounded-full border border-border px-3 py-0.5 text-xs font-medium">Your second brain</span>
+        <h1 className="max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">Save anything. Find it by meaning.</h1>
+        <p className="max-w-xl text-muted-foreground">Links, videos, tweets and PDFs in one searchable place.</p>
+        <form onSubmit={handleSearch} className="flex w-full max-w-xl gap-2">
+          <Input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search your memory (press Enter)"
+            aria-label="Search your memory"
+            className="h-10 flex-1"
+          />
+          <Button type="submit" className="h-10">Search</Button>
+        </form>
+        <nav className="flex flex-wrap justify-center gap-1 rounded-lg bg-muted p-1" aria-label="Filter by type">
+          {["Link", "YouTube Link", "Tweet", "PDF"].map((item) => (
+            <button
+              key={item}
+              onClick={() => setTypeFilter(typeFilter === item ? null : item)}
+              className={`rounded-md px-3 py-1 text-sm font-medium transition-colors ${typeFilter === item ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {item}
+            </button>
+          ))}
+        </nav>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      <main className="mx-auto max-w-6xl px-4 pb-12 sm:px-8">
+        {error && <p role="alert" className="mb-4 rounded-md bg-destructive/10 border border-destructive px-3 py-2 text-sm text-destructive">{error}</p>}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {visibleCards.map((card) => (
             <CardComponent key={card.id} {...card} onUpdate={(updatedCard) => handleUpdate(card.id, updatedCard)} />
           ))}
@@ -167,24 +163,24 @@ export const MainPage = () => {
 
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-[#2a2a2a] p-6 rounded-lg w-full max-w-md">
+          <div className="bg-card p-6 rounded-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Create New Memory</h2>
-              <Button onClick={() => setIsFormOpen(false)} variant="ghost" className="text-gray-400 hover:text-white">
+              <Button onClick={() => setIsFormOpen(false)} variant="ghost" className="text-muted-foreground hover:text-foreground">
                 <X className="h-6 w-6" />
               </Button>
             </div>
             <div className="space-y-4">
-              {error && <p role="alert" className="rounded bg-red-900/40 border border-red-700 px-3 py-2 text-sm text-red-200">{error}</p>}
+              {error && <p role="alert" className="rounded bg-destructive/10 border border-destructive px-3 py-2 text-sm text-destructive">{error}</p>}
               <div>
-                <label htmlFor="type" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="type" className="block text-sm font-medium text-muted-foreground mb-1">
                   Type
                 </label>
                 <Select onValueChange={handleTypeChange} value={newCard.type}>
-                  <SelectTrigger className="w-full bg-[#333333] text-white border-gray-600">
+                  <SelectTrigger className="w-full bg-background text-foreground border-input">
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#333333] text-white border-gray-600">
+                  <SelectContent className="bg-background text-foreground border-input">
                     <SelectItem value="Link">Link</SelectItem>
                     <SelectItem value="YouTube Link">YouTube Link</SelectItem>
                     <SelectItem value="Tweet">Tweet</SelectItem>
@@ -193,7 +189,7 @@ export const MainPage = () => {
                 </Select>
               </div>
               <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="title" className="block text-sm font-medium text-muted-foreground mb-1">
                   Title
                 </label>
                 <Input
@@ -201,11 +197,11 @@ export const MainPage = () => {
                   name="title"
                   value={newCard.title}
                   onChange={handleInputChange}
-                  className="w-full bg-[#333333] text-white border-gray-600"
+                  className="w-full bg-background text-foreground border-input"
                 />
               </div>
               <div>
-                <label htmlFor="link" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="link" className="block text-sm font-medium text-muted-foreground mb-1">
                   Link
                 </label>
                 <Input
@@ -213,12 +209,12 @@ export const MainPage = () => {
                   name="link"
                   value={newCard.link}
                   onChange={handleInputChange}
-                  className="w-full bg-[#333333] text-white border-gray-600"
+                  className="w-full bg-background text-foreground border-input"
                   placeholder="Enter link"
                 />
               </div>
               <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="description" className="block text-sm font-medium text-muted-foreground mb-1">
                   Description
                 </label>
                 <Textarea
@@ -226,13 +222,13 @@ export const MainPage = () => {
                   name="description"
                   value={newCard.description}
                   onChange={handleInputChange}
-                  className="w-full bg-[#333333] text-white border-gray-600"
+                  className="w-full bg-background text-foreground border-input"
                   rows={3}
                 />
               </div>
               {newCard.type === "PDF" && (
                 <div>
-                  <label htmlFor="file" className="block text-sm font-medium text-gray-300 mb-1">
+                  <label htmlFor="file" className="block text-sm font-medium text-muted-foreground mb-1">
                     Upload PDF
                   </label>
                   <Input
@@ -241,12 +237,12 @@ export const MainPage = () => {
                     type="file"
                     accept=".pdf"
                     onChange={handleInputChange}
-                    className="w-full bg-[#333333] text-white border-gray-600"
+                    className="w-full bg-background text-foreground border-input"
                   />
                 </div>
               )}
               <div>
-                <label htmlFor="tags" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="tags" className="block text-sm font-medium text-muted-foreground mb-1">
                   Tags (comma-separated)
                 </label>
                 <Input
@@ -254,10 +250,10 @@ export const MainPage = () => {
                   name="tags"
                   value={newCard.tags}
                   onChange={handleInputChange}
-                  className="w-full bg-[#333333] text-white border-gray-600"
+                  className="w-full bg-background text-foreground border-input"
                 />
               </div>
-              <Button onClick={handleSave} disabled={saving} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button onClick={handleSave} disabled={saving} className="w-full text-foreground">
                 {saving ? "Saving..." : "Save Memory"}
               </Button>
             </div>

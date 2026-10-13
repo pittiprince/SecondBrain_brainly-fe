@@ -42,33 +42,33 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Card className="bg-[#2a2a2a] text-white hover:bg-[#333333] transition-all duration-300 ease-in-out cursor-pointer border border-gray-700">
+        <Card className="bg-card text-foreground hover:bg-accent transition-all duration-300 ease-in-out cursor-pointer border border-input">
           <CardHeader>
             <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-            <CardDescription className="text-sm text-gray-300 line-clamp-2">{description}</CardDescription>
+            <CardDescription className="text-sm text-muted-foreground line-clamp-2">{description}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
               {tags.split(",").map((tag, index) => (
-                <span key={index} className="px-2 py-1 text-xs bg-[#191919] text-gray-300 rounded-full">
+                <span key={index} className="px-2 py-1 text-xs bg-background text-muted-foreground rounded-full">
                   {tag.trim()}
                 </span>
               ))}
             </div>
           </CardContent>
           <CardFooter>
-            <p className="text-xs text-gray-400">{type}</p>
+            <p className="text-xs text-muted-foreground">{type}</p>
           </CardFooter>
         </Card>
       </DialogTrigger>
-      <DialogContent className="bg-[#2a2a2a] text-white">
+      <DialogContent className="bg-card text-foreground">
         <DialogHeader>
           <DialogTitle>{isEditing ? "Edit Memory" : "Memory Details"}</DialogTitle>
         </DialogHeader>
         {isEditing ? (
           <div className="space-y-4">
             <div>
-              <label htmlFor="edit-title" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="edit-title" className="block text-sm font-medium text-muted-foreground mb-1">
                 Title
               </label>
               <Input
@@ -76,11 +76,11 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                 name="title"
                 value={editedCard.title}
                 onChange={handleInputChange}
-                className="w-full bg-[#333333] text-white border-gray-600"
+                className="w-full bg-background text-foreground border-input"
               />
             </div>
             <div>
-              <label htmlFor="edit-link" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="edit-link" className="block text-sm font-medium text-muted-foreground mb-1">
                 Link
               </label>
               <Input
@@ -88,11 +88,11 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                 name="link"
                 value={editedCard.link}
                 onChange={handleInputChange}
-                className="w-full bg-[#333333] text-white border-gray-600"
+                className="w-full bg-background text-foreground border-input"
               />
             </div>
             <div>
-              <label htmlFor="edit-description" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="edit-description" className="block text-sm font-medium text-muted-foreground mb-1">
                 Description
               </label>
               <Textarea
@@ -100,13 +100,13 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                 name="description"
                 value={editedCard.description}
                 onChange={handleInputChange}
-                className="w-full bg-[#333333] text-white border-gray-600"
+                className="w-full bg-background text-foreground border-input"
                 rows={3}
               />
             </div>
             {type === "PDF" && (
               <div>
-                <label htmlFor="edit-file" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="edit-file" className="block text-sm font-medium text-muted-foreground mb-1">
                   Upload PDF
                 </label>
                 <Input
@@ -115,12 +115,12 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                   type="file"
                   accept=".pdf"
                   onChange={handleInputChange}
-                  className="w-full bg-[#333333] text-white border-gray-600"
+                  className="w-full bg-background text-foreground border-input"
                 />
               </div>
             )}
             <div>
-              <label htmlFor="edit-tags" className="block text-sm font-medium text-gray-300 mb-1">
+              <label htmlFor="edit-tags" className="block text-sm font-medium text-muted-foreground mb-1">
                 Tags (comma-separated)
               </label>
               <Input
@@ -128,14 +128,14 @@ export const CardComponent: React.FC<CardComponentProps> = ({
                 name="tags"
                 value={editedCard.tags}
                 onChange={handleInputChange}
-                className="w-full bg-[#333333] text-white border-gray-600"
+                className="w-full bg-background text-foreground border-input"
               />
             </div>
             <div className="flex justify-end space-x-2">
               <Button onClick={() => setIsEditing(false)} variant="outline">
                 Cancel
               </Button>
-              <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={handleSave}>
                 Save Changes
               </Button>
             </div>
@@ -143,31 +143,31 @@ export const CardComponent: React.FC<CardComponentProps> = ({
         ) : (
           <div className="space-y-4">
             <div>
-              <h3 className="text-sm font-medium text-gray-300">Title</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">Title</h3>
               <p>{title}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-300">Link</h3>
-              <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+              <h3 className="text-sm font-medium text-muted-foreground">Link</h3>
+              <a href={link} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:underline">
                 {link}
               </a>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-300">Description</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">Description</h3>
               <p>{description}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-300">Tags</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {tags.split(",").map((tag, index) => (
-                  <span key={index} className="px-2 py-1 text-xs bg-[#191919] text-gray-300 rounded-full">
+                  <span key={index} className="px-2 py-1 text-xs bg-background text-muted-foreground rounded-full">
                     {tag.trim()}
                   </span>
                 ))}
               </div>
             </div>
             <div className="flex justify-end">
-              <Button onClick={() => setIsEditing(true)} className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={() => setIsEditing(true)}>
                 Edit
               </Button>
             </div>

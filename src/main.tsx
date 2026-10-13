@@ -4,6 +4,11 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 
+const dark = window.matchMedia('(prefers-color-scheme: dark)')
+const applyTheme = () => document.documentElement.classList.toggle('dark', dark.matches)
+applyTheme()
+dark.addEventListener('change', applyTheme)
+
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <App />

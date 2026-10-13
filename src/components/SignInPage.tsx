@@ -31,7 +31,7 @@ export function SignInPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-800 via-black to-gray-800">
-      <nav className="fixed w-full z-40 backdrop-blur-sm bg-black border-b border-gray-700">
+      <nav className="fixed w-full z-40 backdrop-blur-sm bg-black border-b border-input">
         <div className="container mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -40,10 +40,10 @@ export function SignInPage() {
                 className="flex items-center space-x-2 focus:outline-none"
               >
                 <div className="relative">
-                  <Network className="w-7 h-7 sm:w-8 sm:h-8 text-white transform rotate-45" />
-                  <Network className="w-7 h-7 sm:w-8 sm:h-8 text-gray-500 absolute top-0 left-0 transform rotate-90" />
+                  <Network className="w-7 h-7 sm:w-8 sm:h-8 text-foreground transform rotate-45" />
+                  <Network className="w-7 h-7 sm:w-8 sm:h-8 text-muted-foreground absolute top-0 left-0 transform rotate-90" />
                 </div>
-                <span className="text-lg sm:text-xl font-semibold text-white">
+                <span className="text-lg sm:text-xl font-semibold text-foreground">
                   Brainly
                 </span>
               </button>
@@ -54,11 +54,11 @@ export function SignInPage() {
 
       <section className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-gray-800 border-gray-700">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center text-white">
+          <div className="max-w-md mx-auto p-6 sm:p-10 rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl border bg-gray-800 border-input">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center text-foreground">
               Welcome Back
             </h2>
-            <p className="text-center mb-6 sm:mb-8 text-sm sm:text-base text-gray-400">
+            <p className="text-center mb-6 sm:mb-8 text-sm sm:text-base text-muted-foreground">
               Access Your Second Brain
             </p>
             
@@ -67,7 +67,7 @@ export function SignInPage() {
                 <div key={field} className="relative">
                   <label 
                     htmlFor={field} 
-                    className="block mb-1 sm:mb-2 text-sm sm:text-base font-medium text-gray-300"
+                    className="block mb-1 sm:mb-2 text-sm sm:text-base font-medium text-muted-foreground"
                   >
                     {field === 'email' ? 'Email Address' : 'Password'}
                   </label>
@@ -80,9 +80,9 @@ export function SignInPage() {
                         field === 'email' ? setEmail(e.target.value) : setPassword(e.target.value)
                       }
                       required
-                      className="w-full pl-10 pr-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-700 border-gray-600 text-white"
+                      className="w-full pl-10 pr-4 py-2 sm:py-3 text-sm sm:text-base border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-700 border-input text-foreground"
                     />
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                       {field === 'email' ? (
                         <Mail className="w-5 h-5" />
                       ) : (
@@ -93,7 +93,7 @@ export function SignInPage() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-600 text-gray-300"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-600 text-muted-foreground"
                       >
                         {showPassword ? (
                           <EyeOff className="w-5 h-5" />
@@ -111,12 +111,12 @@ export function SignInPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-gray-600 text-white"
+                className="w-full px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl hover:opacity-90 transition-colors font-semibold shadow-md bg-gray-600 text-foreground"
               >
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
 
-              <div className="relative flex items-center py-4 text-gray-400">
+              <div className="relative flex items-center py-4 text-muted-foreground">
                 <div className="flex-grow border-t"></div>
                 <span className="flex-shrink mx-4 text-sm">or continue with</span>
                 <div className="flex-grow border-t"></div>
@@ -125,15 +125,15 @@ export function SignInPage() {
               <button
                 type="button"
                 onClick={() => { window.location.href = `${API_URL}/api/google-signin`; }}
-                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-gray-700 hover:bg-gray-600 text-white"
+                className="w-full flex items-center justify-center space-x-3 px-4 py-2 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border transition-colors font-medium bg-gray-700 hover:bg-gray-600 text-foreground"
               >
                 <span>Continue with Google</span>
               </button>
             </form>
 
-            <p className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-gray-400">
+            <p className="mt-4 sm:mt-6 text-center text-xs sm:text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <a href="/signup-page" className="text-white font-semibold hover:underline">Sign up</a>
+              <a href="/signup-page" className="text-foreground font-semibold hover:underline">Sign up</a>
             </p>
           </div>
         </div>
